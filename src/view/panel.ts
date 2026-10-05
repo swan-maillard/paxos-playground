@@ -2,7 +2,7 @@ import { nameOf } from "../paxy/cast";
 import type { Note, Timed } from "../paxy/notes";
 import type { Proposer } from "../paxy/proposer";
 import type { Sim } from "../paxy/sim";
-import { ms, tuple } from "./words";
+import { ms, shortTuple } from "./words";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -59,9 +59,12 @@ export class Panel {
         const tr = document.createElement("tr");
         const th = document.createElement("th");
         th.scope = "row";
-        th.textContent = nameOf(p.atom);
-        const round = p.phase === "sleeping" ? "none" : tuple(p.round);
-        tr.append(th, cell(round, "num"), cell(p.decided ? p.decided.value : p.value), cell(doing(p), p.decided ? "strong" : ""));
+        const status = document.createElement("span");
+        status.className = p.decided ? "doing strong" : "doing";
+        status.textContent = doing(p);
+        th.append(nameOf(p.atom), status);
+        const round = p.phase === "sleeping" ? "none" : String(p.round.n);
+        tr.append(th, cell(round, "num"), cell(p.decided ? p.decided.value : p.value));
         return tr;
       }),
     );
@@ -85,7 +88,9 @@ export class Panel {
         tr = this.acceptorsBody.insertRow();
         const th = document.createElement("th");
         th.scope = "row";
-        th.textContent = nameOf(a.atom);
+        const sub = document.createElement("span");
+        sub.className = "doing";
+        th.append(nameOf(a.atom), sub);
         const button = document.createElement("button");
         button.type = "button";
         button.className = "small";
@@ -95,9 +100,10 @@ export class Panel {
         tr.append(th, cell("", "num"), cell(""), td);
       }
       const state = a.down ? a.stored : a;
-      const promised = tuple(state.promised);
-      const voted = state.value === null ? "nothing" : `${state.value} in ${tuple(state.voted)}`;
-      tr.cells[1].textContent = a.down ? `on disk: ${promised}` : promised;
+      const promised = shortTuple(state.promised);
+      const voted = state.value === null ? "nothing" : `${state.value} ${shortTuple(state.voted)}`;
+      tr.cells[1].textContent = promised;
+      tr.cells[0].querySelector(".doing")!.textContent = a.down ? "crashed, state on disk" : "";
       tr.cells[2].textContent = voted;
       tr.classList.toggle("down", a.down);
       const button = tr.cells[3].querySelector("button")!;

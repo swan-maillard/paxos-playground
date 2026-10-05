@@ -3,7 +3,7 @@ import type { Note } from "../paxy/notes";
 import { TIMEOUT } from "../paxy/proposer";
 import { isNull, ms, ordinal, roundOf } from "./words";
 
-const his = (n: number) => (n === 1 ? "1 more" : `${n} more`);
+const more = (n: number) => (n === 1 ? "One more sorry" : "Two more");
 
 export function narrate(n: Note): string {
   switch (n.type) {
@@ -43,7 +43,7 @@ export function narrate(n: Note): string {
       const a = nameOf(n.env.from);
       const m = n.env.msg;
       if (n.effect === "refusal") {
-        const tail = n.refusals > 0 ? ` ${his(n.refusals)} and he gives up this round.` : "";
+        const tail = n.refusals > 0 ? ` ${more(n.refusals)} and he gives up this round.` : "";
         return `${p} reads a sorry from ${a}, about ${roundOf(m.round)}.${tail}`;
       }
       if (n.effect === "ignored") return `${p} reads ${a}'s ${m.kind} for ${roundOf(m.round)}, not his current round, and moves on.`;

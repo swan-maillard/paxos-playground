@@ -5,8 +5,6 @@ export const isNull = (r: Round) => r.id === 0;
 
 export const roundOf = (r: Round) => (isNull(r) ? "no round" : `round ${r.n} of ${nameOf(r.id as string)}`);
 
-export const tuple = (r: Round) => (isNull(r) ? "none" : `(${r.n}, ${nameOf(r.id as string)})`);
-
 export const initials = (atom: string) =>
   nameOf(atom)
     .split("-")
