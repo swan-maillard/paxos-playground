@@ -57,7 +57,7 @@ export class Proposer {
   deliver(env: Envelope, ctx: ProposerContext): void {
     this.mailbox.push(env);
     if (this.receiving && this.matches(env.msg)) this.receive(ctx);
-    else ctx.note({ type: "queued", env });
+    else ctx.note({ type: "queued", env, waiting: this.phase });
   }
 
   timeout(token: number, ctx: ProposerContext): void {

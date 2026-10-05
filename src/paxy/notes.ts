@@ -1,6 +1,7 @@
 import type { Round } from "./order";
 import type { Value } from "./cast";
 import type { Envelope } from "./messages";
+import type { Phase } from "./proposer";
 
 // What happened at one instant, in a form the narration and the tests can both read.
 export type Note =
@@ -11,7 +12,7 @@ export type Note =
   | { type: "lost"; env: Envelope }
   | { type: "down"; env: Envelope }
   | { type: "dead"; env: Envelope }
-  | { type: "queued"; env: Envelope }
+  | { type: "queued"; env: Envelope; waiting: Phase }
   | { type: "read"; proposer: string; env: Envelope; effect: ReadEffect; left: number; refusals: number }
   | { type: "accepting"; proposer: string; round: Round; value: Value; was: Value }
   | { type: "abort"; proposer: string; round: Round; reason: "sorry" | "timeout"; phase: "prepare" | "accept"; sleep: number }

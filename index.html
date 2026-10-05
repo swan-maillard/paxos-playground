@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Paxy, a Paxos playground</title>
+    <meta
+      name="description"
+      content="Three proposers and five acceptors agree on one colour with Paxos. Every message is on screen, and you can delay them, drop them or crash acceptors. Ported from my Erlang lab at UPC Barcelona."
+    />
+    <meta name="theme-color" content="#0D161C" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="intro">
+        <h1>Paxy, a Paxos playground</h1>
+        <p class="lede">
+          Paxy was a lab from my Erasmus semester at UPC Barcelona in 2023: a Paxos simulation in Erlang/OTP where three
+          proposers try to get five acceptors to agree on one colour. This page runs the same proposer and acceptor
+          logic, message by message.
+        </p>
+        <p class="links">
+          <a href="https://github.com/swan-maillard/UPC-Erlang-Paxy">Code of the original project</a>
+          <a href="https://swan-maillard.github.io/#work">Swan Maillard</a>
+        </p>
+      </header>
+
+      <main>
+        <section class="play" aria-label="Simulation">
+          <div class="left">
+            <div class="stage card" id="stage"></div>
+
+            <div class="controls card" aria-label="Controls">
+              <div class="row buttons">
+                <button type="button" class="primary" id="play">Play</button>
+                <button type="button" id="step">Step one message</button>
+                <span class="clock" id="clock">0 ms</span>
+              </div>
+              <div class="row sliders">
+                <div class="field">
+                  <label for="speed">Speed <output id="speed-out" for="speed">1×</output></label>
+                  <input type="range" id="speed" min="-4" max="4" step="1" value="0" />
+                </div>
+                <div class="field">
+                  <label for="delay">Extra delay, up to <output id="delay-out" for="delay">0 ms</output></label>
+                  <input type="range" id="delay" min="0" max="5000" step="100" value="0" />
+                </div>
+                <div class="field">
+                  <label for="drop">Lost messages <output id="drop-out" for="drop">0%</output></label>
+                  <input type="range" id="drop" min="0" max="50" step="5" value="0" />
+                </div>
+              </div>
+              <div class="row setup">
+                <div class="field">
+                  <label for="start">Start</label>
+                  <select id="start">
+                    <option value="0,0,0">All three at once</option>
+                    <option value="0,1000,2000">One after another (0, 1 s, 2 s)</option>
+                  </select>
+                </div>
+                <div class="field seed">
+                  <label for="seed">Seed</label>
+                  <input type="number" id="seed" min="1" max="999999" step="1" value="1" inputmode="numeric" />
+                </div>
+                <button type="button" id="reset">Reset</button>
+              </div>
+              <p class="legend">
+                <span class="tag t-prepare">prepare</span>
+                <span class="tag t-promise">promise</span>
+                <span class="tag t-accept">accept</span>
+                <span class="tag t-vote">vote</span>
+                <span class="tag t-sorry">sorry</span>
+                <span class="tag t-lost">lost</span>
+              </p>
+            </div>
+          </div>
+
+          <aside class="panel card" aria-label="What is happening">
+            <h2>What just happened</h2>
+            <div id="decided" class="decided" hidden></div>
+            <ol id="story" class="story"></ol>
+            <p id="live" class="sr-only" aria-live="polite"></p>
+
+            <h3>Proposers</h3>
+            <table class="state">
+              <thead>
+                <tr><th scope="col">Name</th><th scope="col">Round</th><th scope="col">Value</th><th scope="col">Doing</th></tr>
+              </thead>
+              <tbody id="proposers"></tbody>
+            </table>
+
+            <h3>Acceptors</h3>
+            <table class="state">
+              <thead>
+                <tr><th scope="col">Name</th><th scope="col">Promised</th><th scope="col">Voted</th><th scope="col"><span class="sr-only">Crash or restart</span></th></tr>
+              </thead>
+              <tbody id="acceptors"></tbody>
+            </table>
+
+            <h3>Rounds</h3>
+            <ul id="rounds" class="rounds"></ul>
+          </aside>
+        </section>
+
+        <section class="explain" aria-labelledby="explain-title">
+          <h2 id="explain-title">What you're looking at</h2>
+          <p>
+            Paxos is a way for machines that can crash or lose messages to agree on one value. Here, three proposers each
+            want their own colour: Jean-Phillibert wants red, Jean-Maxence green and Jean-Eude blue. Five acceptors vote,
+            and a value is chosen once three of them, a majority, have voted for it in the same round.
+          </p>
+          <p>
+            A round has two steps. The proposer sends prepare, which asks "will you ignore every older round?". An acceptor
+            answers promise if this is the highest round she has seen, and tells him the last value she voted for. If she
+            already promised a higher round she answers sorry. With three promises, the proposer sends accept and waits for
+            three votes. The catch is that if a promise carried an earlier vote, he has to propose that value, not his own.
+            That's why the last proposer usually ends up deciding someone else's colour, and why two proposers can never
+            decide different values.
+          </p>
+          <p>
+            A round is a number plus the proposer's name, like (2, Jean-Eude), and two rounds with the same number are
+            ordered by name, alphabetically. A proposer gives up a round after three sorry messages, or after 2 seconds
+            without an answer. He then waits a random backoff (up to 10 ms, doubled after every failed round) and tries the
+            next number.
+          </p>
+          <p>
+            Things to try: in my original experiments, an injected delay of up to 5000 ms made the run take 168 seconds and
+            14 rounds. Push the delay past 2000 ms, the proposer's timeout, to see why. Crash two acceptors and the other
+            three still decide. Crash three and nobody can, until one restarts and reads her promises back from disk.
+          </p>
+        </section>
+      </main>
+
+      <footer>
+        Ported from <a href="https://github.com/swan-maillard/UPC-Erlang-Paxy">UPC-Erlang-Paxy</a> (Erasmus lab at UPC
+        Barcelona, 2023). Built by Swan Maillard.
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
