@@ -1,0 +1,23 @@
+{
+  "name": "paxos-playground",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A Paxos playground: three proposers, five acceptors, every message on screen.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  },
+  "dependencies": {
+    "@fontsource/barlow": "^5.3.0",
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/josefin-sans": "^5.3.0"
+  }
+}

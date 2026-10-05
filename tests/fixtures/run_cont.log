@@ -1,0 +1,60 @@
+[Proposer {jeanphillibert,nonode@nohost}] Phase 1: round {0,{jeanphillibert,nonode@nohost}} proposal jeanphillibert
+[Proposer {jeanmaxence,nonode@nohost}] Phase 1: round {0,{jeanmaxence,nonode@nohost}} proposal jeanmaxence
+[Proposer {jeaneude,nonode@nohost}] Phase 1: round {0,{jeaneude,nonode@nohost}} proposal jeaneude
+[Proposer {jeaneude,nonode@nohost}] Phase 2: round {0,{jeaneude,nonode@nohost}} proposal jeaneude (was jeaneude)
+[Acceptor {mariemicheline,nonode@nohost}] Phase 1: promised {0,{jeaneude,nonode@nohost}} voted {0,0} colour na
+[Acceptor {marieelise,nonode@nohost}] Phase 1: promised {0,{jeaneude,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 1: promised {0,{jeaneude,nonode@nohost}} voted {0,0} colour na
+[Proposer {jeanmaxence,nonode@nohost}] Phase 2: round {0,{jeanmaxence,nonode@nohost}} proposal jeanmaxence (was jeanmaxence)
+[Acceptor {mariejosette,nonode@nohost}] Phase 1: promised {0,{jeaneude,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariejeanne,nonode@nohost}] Phase 1: promised {0,{jeaneude,nonode@nohost}} voted {0,0} colour na
+[Acceptor {marieelise,nonode@nohost}] Phase 1: promised {0,{jeanmaxence,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariemicheline,nonode@nohost}] Phase 1: promised {0,{jeanmaxence,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 1: promised {0,{jeanmaxence,nonode@nohost}} voted {0,0} colour na
+[Proposer {jeanphillibert,nonode@nohost}] Phase 2: round {0,{jeanphillibert,nonode@nohost}} proposal jeanphillibert (was jeanphillibert)
+[Acceptor {mariejeanne,nonode@nohost}] Phase 1: promised {0,{jeanmaxence,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariejosette,nonode@nohost}] Phase 1: promised {0,{jeanmaxence,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariemicheline,nonode@nohost}] Phase 1: promised {0,{jeanphillibert,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 1: promised {0,{jeanphillibert,nonode@nohost}} voted {0,0} colour na
+[Acceptor {marieelise,nonode@nohost}] Phase 1: promised {0,{jeanphillibert,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariemicheline,nonode@nohost}] Phase 2: promised {0,{jeanphillibert,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {marieelise,nonode@nohost}] Phase 2: promised {0,{jeanphillibert,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 2: promised {0,{jeanphillibert,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Proposer {jeanphillibert,nonode@nohost}] DECIDED jeanphillibert in round {0,{jeanphillibert,nonode@nohost}} after 42 ms
+[Acceptor {mariejosette,nonode@nohost}] Phase 1: promised {0,{jeanphillibert,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariejeanne,nonode@nohost}] Phase 1: promised {0,{jeanphillibert,nonode@nohost}} voted {0,0} colour na
+[Acceptor {mariejosette,nonode@nohost}] Phase 2: promised {0,{jeanphillibert,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejeanne,nonode@nohost}] Phase 2: promised {0,{jeanphillibert,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Proposer {jeanmaxence,nonode@nohost}] Phase 1: round {1,{jeanmaxence,nonode@nohost}} proposal jeanmaxence
+[Proposer {jeanmaxence,nonode@nohost}] Phase 2: round {1,{jeanmaxence,nonode@nohost}} proposal jeanphillibert (was jeanmaxence)
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 1: promised {1,{jeanmaxence,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariemicheline,nonode@nohost}] Phase 1: promised {1,{jeanmaxence,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {marieelise,nonode@nohost}] Phase 1: promised {1,{jeanmaxence,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 2: promised {1,{jeanmaxence,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariemicheline,nonode@nohost}] Phase 2: promised {1,{jeanmaxence,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {marieelise,nonode@nohost}] Phase 2: promised {1,{jeanmaxence,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Proposer {jeanmaxence,nonode@nohost}] DECIDED jeanphillibert in round {1,{jeanmaxence,nonode@nohost}} after 51 ms
+[Proposer {jeaneude,nonode@nohost}] Phase 1: round {1,{jeaneude,nonode@nohost}} proposal jeaneude
+[Acceptor {mariejeanne,nonode@nohost}] Phase 1: promised {1,{jeanmaxence,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejosette,nonode@nohost}] Phase 1: promised {1,{jeanmaxence,nonode@nohost}} voted {0,{jeanphillibert,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejeanne,nonode@nohost}] Phase 2: promised {1,{jeanmaxence,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejosette,nonode@nohost}] Phase 2: promised {1,{jeanmaxence,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Proposer {jeaneude,nonode@nohost}] Phase 1: round {2,{jeaneude,nonode@nohost}} proposal jeaneude
+[Acceptor {mariemicheline,nonode@nohost}] Phase 1: promised {2,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejeanne,nonode@nohost}] Phase 1: promised {2,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 1: promised {2,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {marieelise,nonode@nohost}] Phase 1: promised {2,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejosette,nonode@nohost}] Phase 1: promised {2,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Proposer {jeaneude,nonode@nohost}] Phase 1: round {3,{jeaneude,nonode@nohost}} proposal jeaneude
+[Proposer {jeaneude,nonode@nohost}] Phase 2: round {3,{jeaneude,nonode@nohost}} proposal jeanphillibert (was jeaneude)
+[Acceptor {mariejosette,nonode@nohost}] Phase 1: promised {3,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariemicheline,nonode@nohost}] Phase 1: promised {3,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejeanne,nonode@nohost}] Phase 1: promised {3,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 1: promised {3,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {marieelise,nonode@nohost}] Phase 1: promised {3,{jeaneude,nonode@nohost}} voted {1,{jeanmaxence,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejosette,nonode@nohost}] Phase 2: promised {3,{jeaneude,nonode@nohost}} voted {3,{jeaneude,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariemicheline,nonode@nohost}] Phase 2: promised {3,{jeaneude,nonode@nohost}} voted {3,{jeaneude,nonode@nohost}} colour jeanphillibert
+[Acceptor {mariejeanne,nonode@nohost}] Phase 2: promised {3,{jeaneude,nonode@nohost}} voted {3,{jeaneude,nonode@nohost}} colour jeanphillibert
+[Proposer {jeaneude,nonode@nohost}] DECIDED jeanphillibert in round {3,{jeaneude,nonode@nohost}} after 77 ms
+[Acceptor {mariecunegonde,nonode@nohost}] Phase 2: promised {3,{jeaneude,nonode@nohost}} voted {3,{jeaneude,nonode@nohost}} colour jeanphillibert
+[Acceptor {marieelise,nonode@nohost}] Phase 2: promised {3,{jeaneude,nonode@nohost}} voted {3,{jeaneude,nonode@nohost}} colour jeanphillibert
