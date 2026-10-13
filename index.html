@@ -6,7 +6,7 @@
     <title>Paxy, a Paxos playground</title>
     <meta
       name="description"
-      content="Three proposers and five acceptors agree on one colour with Paxos. Every message is on screen, and you can delay them, drop them or crash acceptors. Ported from my Erlang lab at UPC Barcelona."
+      content="Three proposers and five acceptors trying to agree on one colour with Paxos. You can slow the messages down, lose some of them or crash acceptors, and watch what happens."
     />
     <meta name="theme-color" content="#0D161C" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
@@ -14,27 +14,22 @@
   <body>
     <div class="wrap">
       <header class="intro">
-        <h1>Paxy, a Paxos playground</h1>
-        <p class="lede">
-          Paxy was a lab from my Erasmus semester at UPC Barcelona in 2023: a Paxos simulation in Erlang/OTP where three
-          proposers try to get five acceptors to agree on one colour. This page runs the same proposer and acceptor
-          logic, message by message.
-        </p>
-        <p class="links">
-          <a href="https://github.com/swan-maillard/UPC-Erlang-Paxy">Code of the original project</a>
-          <a href="https://swan-maillard.github.io/#work">Swan Maillard</a>
+        <h1>Paxy <span>Paxos playground</span></h1>
+        <p>
+          A lab from my Erasmus semester at UPC Barcelona (2023), first written in Erlang. Three proposers each want their
+          own colour, and five acceptors have to agree on only one. Every message is drawn, so you can see a round happen.
+          <a href="https://github.com/swan-maillard/UPC-Erlang-Paxy">Code on GitHub</a>
         </p>
       </header>
 
       <main>
         <section class="play" aria-label="Simulation">
           <div class="left">
-            <div class="stage card" id="stage"></div>
-
-            <div class="controls card" aria-label="Controls">
+            <div class="toolbar" aria-label="Controls">
               <div class="row buttons">
                 <button type="button" class="primary" id="play">Play</button>
-                <button type="button" id="step">Step one message</button>
+                <button type="button" id="step">Step</button>
+                <button type="button" id="reset">Reset</button>
                 <span class="clock" id="clock">0 ms</span>
               </div>
               <div class="row sliders">
@@ -50,34 +45,34 @@
                   <label for="drop">Lost messages <output id="drop-out" for="drop">0%</output></label>
                   <input type="range" id="drop" min="0" max="50" step="5" value="0" />
                 </div>
-              </div>
-              <div class="row setup">
-                <div class="field">
+                <div class="field start">
                   <label for="start">Start</label>
                   <select id="start">
                     <option value="0,0,0">All three at once</option>
-                    <option value="0,1000,2000">One after another (0, 1 s, 2 s)</option>
+                    <option value="0,1000,2000">One after the other</option>
                   </select>
                 </div>
                 <div class="field seed">
                   <label for="seed">Seed</label>
                   <input type="number" id="seed" min="1" max="999999" step="1" value="1" inputmode="numeric" />
                 </div>
-                <button type="button" id="reset">Reset</button>
               </div>
-              <p class="legend">
-                <span class="tag t-prepare">prepare</span>
-                <span class="tag t-promise">promise</span>
-                <span class="tag t-accept">accept</span>
-                <span class="tag t-vote">vote</span>
-                <span class="tag t-sorry">sorry</span>
-                <span class="tag t-lost">lost</span>
-              </p>
             </div>
+
+            <div class="stage" id="stage"></div>
+
+            <p class="legend">
+              <span class="tag t-prepare">prepare</span>
+              <span class="tag t-promise">promise</span>
+              <span class="tag t-accept">accept</span>
+              <span class="tag t-vote">vote</span>
+              <span class="tag t-sorry">sorry</span>
+              <span class="tag t-lost">lost</span>
+            </p>
           </div>
 
-          <aside class="panel card" aria-label="What is happening">
-            <h2>What just happened</h2>
+          <aside class="panel" aria-label="What is happening">
+            <h2>Log</h2>
             <div id="decided" class="decided" hidden></div>
             <ol id="story" class="story"></ol>
             <p id="live" class="sr-only" aria-live="polite"></p>
@@ -97,7 +92,7 @@
               </thead>
               <tbody id="acceptors"></tbody>
             </table>
-            <p class="note">A round is written (number, proposer): JP is Jean-Phillibert, JM Jean-Maxence, JE Jean-Eude.</p>
+            <p class="note">(2, JE) means round 2 of Jean-Eude. JP is Jean-Phillibert, JM is Jean-Maxence.</p>
 
             <h3>Rounds</h3>
             <ul id="rounds" class="rounds"></ul>
@@ -105,38 +100,36 @@
         </section>
 
         <section class="explain" aria-labelledby="explain-title">
-          <h2 id="explain-title">What you're looking at</h2>
+          <h2 id="explain-title">How it works</h2>
           <p>
-            Paxos is a way for machines that can crash or lose messages to agree on one value. Here, three proposers each
-            want their own colour: Jean-Phillibert wants red, Jean-Maxence green and Jean-Eude blue. Five acceptors vote,
-            and a value is chosen once three of them, a majority, have voted for it in the same round.
+            Paxos lets machines that can crash or lose messages agree on one value. Jean-Phillibert wants red, Jean-Maxence
+            green and Jean-Eude blue. A value is chosen when three of the five acceptors (a majority) vote for it in the
+            same round.
           </p>
           <p>
-            A round has two steps. The proposer sends prepare, which asks "will you ignore every older round?". An acceptor
-            answers promise if this is the highest round she has seen, and tells him the last value she voted for. If she
-            already promised a higher round she answers sorry. With three promises, the proposer sends accept and waits for
-            three votes. The catch is that if a promise carried an earlier vote, he has to propose that value, not his own.
-            That's why the last proposer usually ends up deciding someone else's colour, and why two proposers can never
-            decide different values.
+            A round has two steps. The proposer sends prepare, and each acceptor answers promise if it's the highest round
+            she has seen, with her last vote if she has one. Otherwise she answers sorry. With three promises the proposer
+            sends accept and waits for three votes. If one of the promises carried a vote, he has to propose that value
+            instead of his own. That's why the proposers often end up deciding someone else's colour, and why they can
+            never decide two different ones.
           </p>
           <p>
-            A round is a number plus the proposer's name, like (2, Jean-Eude), and two rounds with the same number are
-            ordered by name, alphabetically. A proposer gives up a round after three sorry messages, or after 2 seconds
-            without an answer. He then waits a random backoff (up to 10 ms, doubled after every failed round) and tries the
-            next number.
+            A proposer gives up a round after three sorry, or after 2 seconds without an answer, then waits a bit and tries
+            the next round.
           </p>
-          <p>
-            Things to try: in my original experiments, an injected delay of up to 5000 ms made the run take 168 seconds and
-            14 rounds. Push the delay past 2000 ms, the proposer's timeout, to see why. Crash two acceptors and the other
-            three still decide. Crash three and nobody can, until one restarts and reads her promises back from disk.
-          </p>
+          <h3>Things to try</h3>
+          <ul>
+            <li>
+              Put the delay above 2000 ms, the proposer's timeout. In my original experiments, a delay of up to 5000 ms took
+              168 seconds and 14 rounds to reach a decision.
+            </li>
+            <li>Crash two acceptors: the other three can still decide.</li>
+            <li>Crash three: nothing can be decided until one of them restarts and reads her state back from disk.</li>
+          </ul>
         </section>
       </main>
 
-      <footer>
-        Ported from <a href="https://github.com/swan-maillard/UPC-Erlang-Paxy">UPC-Erlang-Paxy</a> (Erasmus lab at UPC
-        Barcelona, 2023). Built by Swan Maillard.
-      </footer>
+      <footer>UPC Barcelona, Concurrence, Parallelism and Distributed Systems, 2023</footer>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

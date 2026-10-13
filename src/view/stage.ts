@@ -63,16 +63,16 @@ function layout(width: number): Layout {
     });
     return { width, height, narrow, nodes, anchors };
   }
-  const height = 460;
-  const pw = Math.min(210, width / 3 - 24);
-  const ph = 82;
+  const height = 340;
+  const pw = Math.min(200, width / 3 - 24);
+  const ph = 70;
   PROPOSERS.forEach((p, i) => {
     const cx = (width * (i + 0.5)) / 3;
     nodes.set(p.atom, { x: cx - pw / 2, y: 4, w: pw, h: ph });
     anchors.set(p.atom, { x: cx, y: 4 + ph });
   });
   const aw = Math.min(170, width / 5 - 12);
-  const ah = 86;
+  const ah = 72;
   ACCEPTORS.forEach((a, i) => {
     const cx = (width * (i + 0.5)) / 5;
     nodes.set(a.atom, { x: cx - aw / 2, y: height - ah - 4, w: aw, h: ah });
@@ -140,15 +140,15 @@ export class Stage {
 
   private pill(kind: Kind, x: number, y: number, opacity: number, lost: boolean) {
     const style = PILL[kind];
-    const w = kind.length * 6.8 + 16;
+    const w = kind.length * 7.4 + 14;
     const g = el("g", { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)})`, opacity: opacity.toFixed(2) });
     g.append(
       el("rect", {
         x: -w / 2,
-        y: -11,
+        y: -10,
         width: w,
-        height: 22,
-        rx: 11,
+        height: 20,
+        rx: 2,
         fill: style.fill,
         stroke: style.stroke,
         "stroke-width": 1.5,
@@ -166,7 +166,7 @@ export class Stage {
       y: box.y,
       width: box.w,
       height: box.h,
-      rx: 10,
+      rx: 3,
       fill: opts.down ? "#121E26" : "#18262F",
       stroke,
       "stroke-width": opts.active ? 2 : 1,
@@ -179,12 +179,12 @@ export class Stage {
     const narrow = this.lay.narrow;
     const g = el("g", {});
     g.append(this.card(box, { active, done: !!p.decided }));
-    const x = box.x + (narrow ? 10 : 14);
-    g.append(el("text", { x, y: box.y + 24, class: narrow ? "node-name small" : "node-name" }, nameOf(p.atom)));
+    const x = box.x + (narrow ? 8 : 12);
+    g.append(el("text", { x, y: box.y + 22, class: narrow ? "node-name small" : "node-name" }, nameOf(p.atom)));
     const status = p.decided ? `decided ${p.decided.value}` : p.phase === "sleeping" ? `wants ${p.proposal}` : `proposes ${p.value}`;
-    g.append(el("text", { x, y: box.y + 46, class: p.decided ? "node-strong" : "node-line" }, status));
+    g.append(el("text", { x, y: box.y + 42, class: p.decided ? "node-strong" : "node-line" }, status));
     const round = p.phase === "sleeping" ? "not started" : `round ${p.round.n}`;
-    g.append(el("text", { x, y: box.y + 66, class: "node-dim" }, round));
+    g.append(el("text", { x, y: box.y + 60, class: "node-dim" }, round));
     return g;
   }
 
@@ -194,8 +194,8 @@ export class Stage {
     const g = el("g", {});
     g.append(this.card(box, { active, down: a.down }));
     const full = nameOf(a.atom);
-    const x = box.x + (narrow ? 10 : 14);
-    const [y1, y2, y3] = narrow ? [21, 41, 60] : [24, 48, 70];
+    const x = box.x + (narrow ? 8 : 12);
+    const [y1, y2, y3] = narrow ? [21, 41, 59] : [22, 42, 60];
     g.append(el("text", { x, y: box.y + y1, class: narrow ? "node-name small" : "node-name" }, full));
     if (a.down) {
       g.append(el("text", { x, y: box.y + y2, class: "node-dim" }, "crashed"));

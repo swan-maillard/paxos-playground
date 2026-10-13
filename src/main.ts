@@ -110,7 +110,7 @@ function step(): void {
 function draw(): void {
   stage.render(sim, view, active);
   panel.update(sim);
-  clock.textContent = `Simulated time ${ms(view)}`;
+  clock.textContent = `t = ${ms(view)}`;
   stepButton.disabled = sim.peekTime() === null;
 }
 
@@ -147,7 +147,7 @@ function reset(): void {
   panel.reset();
   story.replaceChildren();
   const li = document.createElement("li");
-  li.textContent = "Nothing has happened yet. Press play, or step one message at a time.";
+  li.textContent = "Nothing yet. Press Play, or Step to go one message at a time.";
   story.append(li);
   draw();
 }
